@@ -1,0 +1,17 @@
+name: "CI"
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: CI/CD Test
+    # https://github.com/actions/virtual-environments/
+    runs-on: ubuntu-24.04
+    steps:
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v6
+      - name: 🌡️ Test
+        run: shellcheck *.sh

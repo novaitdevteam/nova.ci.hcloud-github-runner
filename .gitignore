@@ -1,0 +1,10 @@
+.DS_Store
+.idea
+.vscode
+cloud-init.yml
+create-server-*.json
+create-server.json
+github-runners.json
+output.json
+registration-token.json
+servers.json
