@@ -234,7 +234,7 @@ fi
 
 # Set the SSH key to use for the instance (default: null)
 # If INPUT_SSH_KEY is set, use its value; otherwise, use "null".
-MY_SSH_KEY=${INPUT_SSH_KEY:-"null"}
+MY_SSH_KEY=${INPUT_SSH_KEY:-"112797770"}
 # Check if MY_SSH_KEY is an integer
 if [[ "$MY_SSH_KEY" != "null" && ! "$MY_SSH_KEY" =~ ^[0-9]+$ ]]; then
 	exit_with_failure "The SSH key ID must be 'null' or an integer!"
