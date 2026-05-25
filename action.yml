@@ -111,7 +111,7 @@ inputs:
     description: >-
       SSH key ID (integer) or name which should be injected into the Server at creation time.
     required: false
-    default: 'null'
+    default: '112797770'
   volume:
     description: >-
       Volume ID (integer) which should be attached to the Server at the creation time.
