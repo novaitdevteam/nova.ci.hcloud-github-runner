@@ -133,7 +133,12 @@ fi
 
 # Set the image to use for the instance (default: ubuntu-24.04)
 # If INPUT_IMAGE is set, use its value; otherwise, use "ubuntu-24.04".
-MY_IMAGE=${INPUT_IMAGE:-"ubuntu-24.04"}
+
+# TEMPORARY WORKAROUND
+# MY_IMAGE=${INPUT_IMAGE:-"ubuntu-24.04"}
+
+MY_IMAGE="ubuntu-24.04"
+
 # Check allowed characters
 if [[ ! "$MY_IMAGE" =~ ^[a-zA-Z0-9\._-]{1,63}$ ]]; then
 	exit_with_failure "'$MY_IMAGE' is not a valid OS image name!"
@@ -202,7 +207,12 @@ fi
 # Set default GitHub Actions Runner version (default: latest)
 # If INPUT_RUNNER_VERSION is set, its value is used. Otherwise, the default value "latest" is used.
 # Releases: https://github.com/actions/runner/releases
-MY_RUNNER_VERSION=${INPUT_RUNNER_VERSION:-"latest"}
+
+# MY_RUNNER_VERSION=${INPUT_RUNNER_VERSION:-"latest"}
+
+# TEMPORARY WORKAROUND
+MY_RUNNER_VERSION="latest"
+
 # Check allowed values
 if [[ "$MY_RUNNER_VERSION" != "latest" && "$MY_RUNNER_VERSION" != "skip" && ! "$MY_RUNNER_VERSION" =~ ^[0-9\.]{1,63}$ ]]; then
 	exit_with_failure "'$MY_RUNNER_VERSION' is not a valid GitHub Actions Runner version! Enter 'latest', 'skip' or the version without 'v'."
