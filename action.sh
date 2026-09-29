@@ -133,11 +133,20 @@ fi
 
 # Set the image to use for the instance (default: ubuntu-24.04)
 # If INPUT_IMAGE is set, use its value; otherwise, use "ubuntu-24.04".
+MY_IMAGE=${INPUT_IMAGE:-"ubuntu-24.04"}
 
-# TEMPORARY WORKAROUND
-# MY_IMAGE=${INPUT_IMAGE:-"ubuntu-24.04"}
-
-MY_IMAGE="ubuntu-24.04"
+# Retired snapshot. 370307291 is a March 2026 snapshot with a runner preinstalled, which
+# callers paired with runner_version: skip. From 2026-06-01 until this change the action
+# ignored both inputs and always booted ubuntu-24.04 with the latest runner. Callers are
+# dropping the pair, but branches and tags cut before that keep sending it for months;
+# honouring it would boot them from a stale snapshot. Keep the behaviour they have had.
+# ponytail: remove once no branch still passes it (search the org for "image: 370307291").
+RETIRED_SNAPSHOT_USED=false
+if [[ "$MY_IMAGE" == "370307291" ]]; then
+	echo "::warning::image 370307291 is a retired snapshot; using ubuntu-24.04 and the latest runner instead. Remove 'image' and 'runner_version' from this caller."
+	MY_IMAGE="ubuntu-24.04"
+	RETIRED_SNAPSHOT_USED=true
+fi
 
 # Check allowed characters
 if [[ ! "$MY_IMAGE" =~ ^[a-zA-Z0-9\._-]{1,63}$ ]]; then
@@ -208,10 +217,11 @@ fi
 # If INPUT_RUNNER_VERSION is set, its value is used. Otherwise, the default value "latest" is used.
 # Releases: https://github.com/actions/runner/releases
 
-# MY_RUNNER_VERSION=${INPUT_RUNNER_VERSION:-"latest"}
-
-# TEMPORARY WORKAROUND
-MY_RUNNER_VERSION="latest"
+MY_RUNNER_VERSION=${INPUT_RUNNER_VERSION:-"latest"}
+# 'skip' only worked with the retired snapshot's preinstalled runner (see above).
+if [[ "$RETIRED_SNAPSHOT_USED" == "true" ]]; then
+	MY_RUNNER_VERSION="latest"
+fi
 
 # Check allowed values
 if [[ "$MY_RUNNER_VERSION" != "latest" && "$MY_RUNNER_VERSION" != "skip" && ! "$MY_RUNNER_VERSION" =~ ^[0-9\.]{1,63}$ ]]; then
