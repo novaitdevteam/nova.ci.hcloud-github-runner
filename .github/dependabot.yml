@@ -1,6 +1,16 @@
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
+  # Same policy as nova.ci: weekly, a 7-day cooldown before a release is proposed, minor
+  # and patch grouped, a major on its own. Every caller runs this action at @main, so a
+  # merge here goes live everywhere at once.
+  - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+    commit-message:
+      prefix: "ci"
